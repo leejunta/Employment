@@ -4,10 +4,12 @@ require(lubridate)
 require(Amelia)
 require(caret)
 
-pew <- read.csv("data/June 10-July 12, 2015 - Gaming, Jobs and Broadband - CSV.csv")
+dataset00 <- read.csv("data/June 10-July 12, 2015 - Gaming, Jobs and Broadband - CSV.csv")
 
 #REMOVE RETIRED AND STUDENT
-pew <- pew[(pew$empl!=3) & (pew$empl!=7),]
+dataset00 <- dataset00[(dataset00$empl!=3) & (dataset00$empl!=7),]
+write.csv(dataset00,"data/unchanged.csv",row.names=F)
+pew <- dataset00
 
 #Change Interview date to just month
 month <- sapply(pew$int_date,function(x) substring(x,1,1))

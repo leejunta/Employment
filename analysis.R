@@ -199,6 +199,62 @@ ggplot(data = disdatm) +
 #0.7584851 employed
 #0.2415149 unemployed
 
+#for further analysis, we add income to the data
+dataset00 <- read.csv("data/unchanged.csv")
+inc <- data.frame("Disability" = cleaned$disa,
+                  "Employment" = cleaned$empl,
+                  "Income" = dataset00$inc)
+inc$Income[inc$Income==1] <- "<$10,000"
+inc$Income[inc$Income==2] <- "$10,000-$19,999"
+inc$Income[inc$Income==3] <- "$20,000-$29,999"
+inc$Income[inc$Income==4] <- "$30,000-$39,999"
+inc$Income[inc$Income==5] <- "$40,000-$49,999"
+inc$Income[inc$Income==6] <- "$50,000-$64,999"
+inc$Income[inc$Income==7] <- "$75,000-$99,999"
+inc$Income[inc$Income==8] <- "$100,000-$149,999"
+inc$Income[inc$Income==9] <- ">$150,000"
+inc$Income[(inc$Income==99) | (inc$Income==98)] <- "Refused"
+inc$Disability <- as.vector(inc$Disability)
+inc$Disability[(inc$Disability==1)] <- "Disabled"
+inc$Disability[(inc$Disability==2)] <- "Not Disabled"
+inc$Disability[(inc$Disability==9)] <- "Refused"
+inc$Disability <- factor(inc$Disability, levels=c("Disabled","Not Disabled","Refused"))
+inc$Income <- factor(inc$Income,levels=c("<$10,000",
+                                 "$10,000-$19,999",
+                                 "$20,000-$29,999",
+                                 "$30,000-$39,999",
+                                 "$40,000-$49,999",
+                                 "$50,000-$64,999",
+                                 "$75,000-$99,999",
+                                 "$100,000-$149,999",
+                                 ">$150,000","Refused"))
+inc$Employment <- factor(inc$Employment,levels=c("Employed","Unemployed"))
+incdatm <- propggplot(inc$Disability,inc$Income)
+incdatm$colvar <- factor(incdatm$colvar,levels=c("<$10,000",
+                                             "$10,000-$19,999",
+                                             "$20,000-$29,999",
+                                             "$30,000-$39,999",
+                                             "$40,000-$49,999",
+                                             "$50,000-$64,999",
+                                             "$75,000-$99,999",
+                                             "$100,000-$149,999",
+                                             ">$150,000","Refused"))
+
+ggplot(data = incdatm[order(incdatm$rowvar),]) +
+    geom_mosaic(aes(weight = value, x = product(rowvar, colvar), 
+                    fill=rowvar), na.rm=TRUE) +
+    labs(title = "Income Distribution",
+         x = "",
+         y = "Percentage",
+         fill = "Disability") + 
+    theme(legend.position = 'bottom',
+          plot.title=element_text(hjust = 0.5,
+                                  face = 'bold',
+                                  size = 14),
+          axis.text.x = element_text(angle = 30,
+                                     size = 8))
+
+###############################
 
 #age
 #age density plot
