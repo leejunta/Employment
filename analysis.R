@@ -11,6 +11,7 @@ require(ggplot2)
 require(rattle)
 require(corrplot)
 require(dplyr)
+require(ggmosaic)
 
 #ASSUMPTION
 #Those who are retired are unemployed
@@ -114,8 +115,8 @@ pred04 <- predict(model04,testw[,-which(colnames(trainw)=="empl")],type='prob')[
 roc04 <- roc(testw$empl,pred04)
 v04 <- varImp(model04)
 
-saveRDS(model04, "model04.rds")
-model04 <- readRDS("model04.rds")
+saveRDS(model04, "models/model04.rds")
+model04 <- readRDS("models/model04.rds")
 
 #rpart
 model05 <- train(empl~.-psraid-state, data = trainw,
@@ -126,8 +127,8 @@ pred05 <- predict(model05,testw[,-which(colnames(trainw)=="empl")],type='prob')[
 roc05 <- roc(testw$empl,pred05)
 v05 <- varImp(model05)
 
-saveRDS(model05, "model05.rds")
-model05 <- readRDS("model05.rds")
+saveRDS(model05, "models/model05.rds")
+model05 <- readRDS("models/model05.rds")
 
 #logistic regression with penalty
 model06 <- train(empl~., data = trainw[,-c(which(colnames(trainw)=='psraid'),
@@ -140,8 +141,8 @@ pred06 <- predict(model06,testw[,-which(colnames(trainw)=="empl")],type='prob')[
 roc06 <- roc(testw$empl,pred06)
 v06 <- varImp(model06)
 
-saveRDS(model06, "model06.rds")
-model06 <- readRDS("model06.rds")
+saveRDS(model06, "models/model06.rds")
+model06 <- readRDS("models/model06.rds")
 
 #bayesian generalized linear model
 model07 <- train(empl~., data = trainw[,-c(which(colnames(trainw)=='psraid'),
@@ -154,8 +155,8 @@ pred07 <- predict(model07,testw[,-which(colnames(trainw)=="empl")],type='prob')[
 roc07 <- roc(testw$empl,pred07)
 v07 <- varImp(model07)
 
-saveRDS(model07, "model07.rds")
-model07 <- readRDS("model07.rds")
+saveRDS(model07, "models/model07.rds")
+model07 <- readRDS("models/model07.rds")
 
 #rf
 model08 <- train(empl~.-psraid-state, data = trainw,
@@ -168,8 +169,8 @@ roc08 <- roc(testw$empl,pred08)
 v08 <- varImp(model08)
 sum(fixed08==testw$empl)/length(fixed08)
 
-saveRDS(model08, "model08.rds")
-model08 <- readRDS("model08.rds")
+saveRDS(model08, "models/model08.rds")
+model08 <- readRDS("models/model08.rds")
 
 ###################################################
 
@@ -183,24 +184,22 @@ labels <- c("Disability",
             "Marital Status",
             "Internet Frequency",
             "Internet Usage")
-varImpPlot(model08$finalModel,n.var = 10,
-           main = "Variable Importance Plot",pch=16, type=2,
-           labels = labels)
-rect(par("usr")[1],par("usr")[3],par("usr")[2],par("usr")[4],col = "gray")
-points(varImpPlot(model08$finalModel,n.var = 10,
-                  main = "Variable Importance Plot",pch=16, type=2,
-                  labels = labels))
 
 imp <- varImpDF(model08$finalModel,9)
 imp$variable <- labels
 imp$variable <- factor(imp$variable,levels = rev(labels))
 
 qplot(variable, data=imp, geom="bar", 
-      weight=importance, colour = importance,
-      xlab = "", ylab="Mean Gini Decrease",) +
-    coord_flip() + 
+      weight=importance, fill = importance,
+      xlab = "", ylab="Mean Gini Decrease (GDM)") +
+    coord_flip() +
+    labs(title = "Variable Importance Plot",
+         fill = "GDM") +
+    theme(plot.title = element_text(hjust = 0.5,
+                                    face = 'bold',
+                                    size = 14))
     
-    ###################################################
+###################################################
 
 #Model04 is the best model. We explore it more
 #NOTE: not anymore
@@ -219,8 +218,8 @@ roc041 <- roc(testw$empl,pred041)
 v041 <- varImp(model041)
 #better model than model04
 
-saveRDS(model041, "model041.rds")
-model041 <- readRDS("model041.rds")
+saveRDS(model041, "models/model041.rds")
+model041 <- readRDS("models/model041.rds")
 
 plot(model041$finalModel,i.var=60,col='blue')
 plot(model041$finalModel,i.var=2,col='blue')
@@ -256,9 +255,10 @@ disa[disa==1] <- "Disabled"
 disa[disa==2] <- "Not Disabled"
 emp <- weighted$empl[weighted$disa != 9]
 disdatm <- propggplot(emp,disa)
-ggplot(disdatm,aes(x = colvar, y = value,fill = rowvar)) + 
-    geom_bar(position = "fill",stat = "identity") + 
-    scale_y_continuous(labels = percent_format()) + 
+
+ggplot(data = disdatm) +
+    geom_mosaic(aes(weight = value, x = product(rowvar, colvar), 
+                    fill=factor(rowvar)), na.rm=TRUE) +
     labs(title = "Employment Status by Disability",
          x = "",
          y = "Percentage",
@@ -266,6 +266,7 @@ ggplot(disdatm,aes(x = colvar, y = value,fill = rowvar)) +
     theme(plot.title=element_text(hjust = 0.5,
                                   face = 'bold',
                                   size = 14))
+
 #removed refused becayse there were too few
 
 #sex
