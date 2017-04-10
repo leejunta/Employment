@@ -186,7 +186,8 @@ ggplot(data = disdatm) +
          fill = "Employment") + 
     theme(plot.title=element_text(hjust = 0.5,
                                   face = 'bold',
-                                  size = 14))
+                                  size = 14)) +
+    scale_fill_brewer(direction=-1,palette=14)
 
 #0.129553 disabled
 #0.2859425 employed|disabled
@@ -252,7 +253,8 @@ ggplot(data = incdatm[order(incdatm$rowvar),]) +
                                   face = 'bold',
                                   size = 14),
           axis.text.x = element_text(angle = 30,
-                                     size = 8))
+                                     size = 8)) +
+    scale_fill_brewer(direction=-1,palette=2)
 
 ###############################
 
