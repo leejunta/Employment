@@ -199,8 +199,8 @@ qplot(variable, data=imp, geom="bar",
       weight=importance, colour = importance,
       xlab = "", ylab="Mean Gini Decrease",) +
     coord_flip() + 
-
-###################################################
+    
+    ###################################################
 
 #Model04 is the best model. We explore it more
 #NOTE: not anymore
@@ -209,11 +209,11 @@ model041 <- train(empl~.-psraid-month-cregion-state-
                       q1-intfreq-bbhome3-device1a-
                       game2f-stud-smjob1-snsjob2a-snsjob2b-
                       hisp, data = trainw,
-                 method = 'gbm',
-                 trControl = myControl,
-                 #tuneGrid = gbmGrid,
-                 na.action = na.exclude,
-                 nTrain = round(0.75*dim(trainw)[1]))
+                  method = 'gbm',
+                  trControl = myControl,
+                  #tuneGrid = gbmGrid,
+                  na.action = na.exclude,
+                  nTrain = round(0.75*dim(trainw)[1]))
 pred041 <- predict(model041,testw[,-which(colnames(trainw)=="empl")],type='prob')[,1]
 roc041 <- roc(testw$empl,pred041)
 v041 <- varImp(model041)
@@ -267,7 +267,7 @@ ggplot(disdatm,aes(x = colvar, y = value,fill = rowvar)) +
                                   face = 'bold',
                                   size = 14))
 #removed refused becayse there were too few
-    
+
 #sex
 sex <- weighted$sex
 emp <- weighted$empl
@@ -277,9 +277,9 @@ ggplot(sexdatm,aes(x = colvar, y = value,fill = rowvar)) +
     geom_bar(position = "fill",stat = "identity") + 
     scale_y_continuous(labels = percent_format()) + 
     labs(title = "Employment Status by Sex",
-           x = "",
-           y = "Percentage",
-           fill = "Employment") + 
+         x = "",
+         y = "Percentage",
+         fill = "Employment") + 
     theme(plot.title=element_text(hjust = 0.5,
                                   face = 'bold',
                                   size = 14))

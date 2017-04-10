@@ -62,4 +62,10 @@ The model produced 84.96% accuracy on the training data, and more importantly
 83.73% accuracy on the testing data (area under the ROC curve: 0.8069). The
 model's variable importance showed that the features with the largest weights
 were `Disability`, `Age`, `Sex`, `Education`, `Internet Usage for Job Search`,
-`Parental Status`, and `Marital Status`.
+`Parental Status`, and `Marital Status`.  
+![Variable Importance][fig:varimp]
+We analyze how the variables of highest importance are related to employment.  
+
+##
+
+[fig:varimp]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/varimp.png
