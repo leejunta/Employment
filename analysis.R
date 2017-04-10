@@ -12,6 +12,7 @@ require(rattle)
 require(corrplot)
 require(dplyr)
 require(ggmosaic)
+require(reshape)
 
 #ASSUMPTION
 #Those who are retired are unemployed
