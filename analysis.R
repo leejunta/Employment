@@ -235,7 +235,7 @@ plot(model041$finalModel,i.var=11,col='blue')
 plot(model041$finalModel,i.var=20,col='blue')
 
 #age density plot
-ggplot( data = weighted, aes(x = age)) + 
+ggplot( data = cleaned, aes(x = age)) + 
     geom_density(adjust=0.6,alpha=0.3) + 
     #geom_vline(xintercept = 57, colour="blue") + 
     aes(colour=empl,fill=empl) + 
@@ -250,10 +250,11 @@ ggplot( data = weighted, aes(x = age)) +
     guides(fill="none")
 
 #disability plot
-disa <- weighted$disa[weighted$disa != 9]
+disa <- cleaned$disa
 disa[disa==1] <- "Disabled"
 disa[disa==2] <- "Not Disabled"
-emp <- weighted$empl[weighted$disa != 9]
+disa[disa==9] <- "Refused"
+emp <- cleaned$empl
 disdatm <- propggplot(emp,disa)
 
 ggplot(data = disdatm) +
@@ -267,11 +268,11 @@ ggplot(data = disdatm) +
                                   face = 'bold',
                                   size = 14))
 
-#removed refused becayse there were too few
+#removed refused because there were too few
 
 #sex
-sex <- weighted$sex
-emp <- weighted$empl
+sex <- cleaned$sex
+emp <- cleaned$empl
 sexdatm <- propggplot(emp,sex)
 #Add an id variable for the filled regions
 ggplot(sexdatm,aes(x = colvar, y = value,fill = rowvar)) + 
@@ -288,7 +289,7 @@ ggplot(sexdatm,aes(x = colvar, y = value,fill = rowvar)) +
 #females have higher unemployment
 
 #sex & age
-ggplot( data = weighted, aes(x = age)) + 
+ggplot( data = cleaned, aes(x = age)) + 
     geom_density(adjust=0.4) + 
     aes(colour=sex,fill=sex,alpha=0.3) + 
     facet_wrap(~empl, ncol=4) + 
@@ -306,7 +307,7 @@ ggplot( data = weighted, aes(x = age)) +
 #younger women are trying to enter more male-dominated jobs
 
 #explore babies to leave the workforce (female)
-fembabies <- weighted[weighted$sex == "Female",]
+fembabies <- cleaned[cleaned$sex == "Female",]
 fembabies$par[fembabies$par==1] <- "Parent"
 fembabies$par[fembabies$par==2] <- "Not Parent"
 fembabies$par[fembabies$par==9] <- "Don't Know"
@@ -327,7 +328,7 @@ ggplot( data = fembabies, aes(x = age)) +
     scale_y_continuous(labels = percent_format())
 
 #explore babies to leave the workforce (male)
-malbabies <- weighted[weighted$sex == "Male",]
+malbabies <- cleaned[cleaned$sex == "Male",]
 malbabies$par[malbabies$par==1] <- "Parent"
 malbabies$par[malbabies$par==2] <- "Not Parent"
 malbabies$par[malbabies$par==9] <- "Don't Know"
@@ -350,11 +351,11 @@ ggplot( data = malbabies, aes(x = age)) +
 ######################################
 
 #examine smart1 next
-smart1 <- weighted$smart1
+smart1 <- cleaned$smart1
 smart1[smart1==1] <- "Smartphone"
 smart1[smart1==2] <- "No Smartphone"
 smart1[smart1==9] <- "Refused"
-emp <- weighted$empl
+emp <- cleaned$empl
 smartdatm <- propggplot(emp,smart1)
 
 ggplot(smartdatm,aes(x = colvar, y = value,fill = rowvar)) + 
@@ -370,7 +371,7 @@ ggplot(smartdatm,aes(x = colvar, y = value,fill = rowvar)) +
                                   size = 12))
 
 #age & smartphone
-smartdf <- weighted[weighted$smart1 != 9,]
+smartdf <- cleaned[cleaned$smart1 != 9,]
 smartdf$smart1[smartdf$smart1 == 1] <- "Smartphone"
 smartdf$smart1[smartdf$smart1 == 2] <- "No Smartphone"
 #smartdf$smart1[smartdf$smart1 == 9] <- "Refused"
