@@ -70,6 +70,11 @@ variables of highest importance are related to employment.
 
 ### Accessibility for persons with disability remains insufficient in the US
 
+Approximately a quarter (24.2%) of people in the weighted data identified as
+being unemployed. However, 71% of people with disabilities were unemployed.
+In contrast, only 17% of people without any disabilities were unemployed. Only
+13% of people in the survey had disabilities but comprised of almost 40% of the
+unemployed group.   
 ![Disability Mosaic][fig:disa]
 
 [fig:varimp]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/varimp.png

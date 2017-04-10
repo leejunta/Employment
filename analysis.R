@@ -11,167 +11,101 @@ require(ggplot2)
 require(rattle)
 require(corrplot)
 require(dplyr)
+require(reshape)
 require(ggmosaic)
 require(reshape)
 
-#ASSUMPTION
-#Those who are retired are unemployed
-
-#read data and change variable types accordingly
-#cleaned <- read.csv("data/cleaned.csv")
-#emp <- data.frame(apply(cleaned[,1:(dim(cleaned)[2]-3)],2,as.factor))
-#emp$weight <- cleaned$weight
-#emp$age <- as.integer(cleaned$age)
-#emp$empl <- as.factor(cleaned$empl)
-#
-#set.seed(179)
-#tIndex <- createDataPartition(emp$empl,p=0.7,list=F)
-#train <- emp[tIndex,]
-#test <- emp[-tIndex,]
-#
-#registerDoMC(cores = 3)
-#myControl <- trainControl(method = "repeatedcv",
-#                          repeats = 3,number = 10)
-
-##GBM
-#model01 <- train(empl~.-psraid, data = train,
-#                 method = 'gbm',
-#                 trControl = myControl,
-#                 #tuneGrid = gbmGrid,
-#                 na.action = na.exclude,
-#                 nTrain = round(0.75*dim(train)[1]))
-#pred01 <- predict(model01,test[,-which(colnames(train)=="empl")],type='prob')[,1]
-#roc01 <- roc(test$empl,pred01)
-#varImp(model01)
-
-#for whatever reason, refusing to answer job1 is the best indicator. let's remove it.
-#train2 <- train[,-c(which(colnames(train)=='job1e'),
-#                    which(colnames(train)=='job1a'),
-#                    which(colnames(train)=='job1b'),
-#                    which(colnames(train)=='job1c'),
-#                    which(colnames(train)=='job1f'),
-#                    which(colnames(train)=='job1d'))]
-#test2 <- test[,-c(which(colnames(test)=='job1e'),
-#                   which(colnames(test)=='job1a'),
-#                   which(colnames(test)=='job1b'),
-#                   which(colnames(test)=='job1c'),
-#                   which(colnames(test)=='job1f'),
-#                   which(colnames(test)=='job1d'))]
-#model011 <- train(empl~.-psraid, data = train2,
-#                 method = 'gbm',
-#                 trControl = myControl,
-#                 na.action = na.exclude,
-#                 train.fraction = 0.5)
-#pred011 <- predict(model011,test2[,-which(colnames(train)=="empl")],type='prob')[,1]
-#roc011 <- roc(test$empl,pred011)
-#varImp(model011)
-##########################
-
-#Naive Bayes
-#model02 <- train(empl~., data = train,
-#                 method = 'nb',
-#                 trControl = myControl,
-#                 na.action = na.exclude)
-#pred02 <- predict(model02,test[,-which(colnames(train)=="empl")],type='prob')[,1]
-#roc02 <- roc(test$empl,pred02)
-#varImp(model02)
-
-#CART
-#model03 <- train(empl~.-psraid, data = train,
-#                 method = 'rpart',
-#                 trControl = myControl,
-#                 #tuneGrid = gbmGrid,
-#                 na.action = na.exclude)
-#pred03 <- predict(model03,test[,-which(colnames(train)=="empl")],type='prob')[,1]
-#roc03 <- roc(test$empl,pred03)
-#varImp(model03)
-
 ##############################
-#model01 shows that weights are important, so we use weighted data
-#UPDATE: then the training data can see the test data
 
 #read data and change variable types accordingly
 cleaned <- read.csv("data/cleaned.csv")
-empw <- data.frame(apply(cleaned[,1:(dim(cleaned)[2]-2)],2,as.factor))
-empw$age <- as.integer(cleaned$age)
-empw$empl <- as.factor(cleaned$empl)
+emp <- data.frame(apply(cleaned[,1:(dim(cleaned)[2]-2)],2,as.factor))
+emp$age <- as.integer(cleaned$age)
+emp$empl <- as.factor(cleaned$empl)
+
+weighted <- read.csv("data/weighted.csv")
+empw <- data.frame(apply(weighted[,1:(dim(weighted)[2]-2)],2,as.factor))
+empw$age <- as.integer(weighted$age)
+empw$empl <- as.factor(weighted$empl)
 
 set.seed(179)
-tIndexw <- createDataPartition(empw$empl,p=0.7,list=F)
-trainw <- empw[tIndexw,]
-testw <- empw[-tIndexw,]
+tIndex <- createDataPartition(emp$empl,p=0.7,list=F)
+train <- emp[tIndex,]
+test <- emp[-tIndex,]
 
 registerDoMC(cores = 3)
 myControl <- trainControl(method = "repeatedcv",
                           repeats = 3,number = 10)
 
 #GBM
-model04 <- train(empl~.-psraid-state, data = trainw,
+model04 <- train(empl~.-psraid-state, data = train,
                  method = 'gbm',
                  trControl = myControl,
                  #tuneGrid = gbmGrid,
                  na.action = na.exclude,
-                 nTrain = round(0.75*dim(trainw)[1]))
-pred04 <- predict(model04,testw[,-which(colnames(trainw)=="empl")],type='prob')[,1]
-roc04 <- roc(testw$empl,pred04)
+                 nTrain = round(0.75*dim(train)[1]))
+pred04 <- predict(model04,test[,-which(colnames(train)=="empl")],type='prob')[,1]
+roc04 <- roc(test$empl,pred04)
 v04 <- varImp(model04)
 
 saveRDS(model04, "models/model04.rds")
 model04 <- readRDS("models/model04.rds")
 
 #rpart
-model05 <- train(empl~.-psraid-state, data = trainw,
+model05 <- train(empl~.-psraid-state, data = train,
                  method = 'rpart',
                  trControl = myControl,
                  na.action = na.exclude)
-pred05 <- predict(model05,testw[,-which(colnames(trainw)=="empl")],type='prob')[,1]
-roc05 <- roc(testw$empl,pred05)
+pred05 <- predict(model05,test[,-which(colnames(train)=="empl")],type='prob')[,1]
+roc05 <- roc(test$empl,pred05)
 v05 <- varImp(model05)
 
 saveRDS(model05, "models/model05.rds")
 model05 <- readRDS("models/model05.rds")
 
 #logistic regression with penalty
-model06 <- train(empl~., data = trainw[,-c(which(colnames(trainw)=='psraid'),
-                                           which(colnames(trainw)=='state'))],
+model06 <- train(empl~., data = train[,-c(which(colnames(train)=='psraid'),
+                                           which(colnames(train)=='state'))],
                  method = 'plr',
                  trControl = myControl,
                  na.action = na.exclude,
                  preProc = c("center","scale"))
-pred06 <- predict(model06,testw[,-which(colnames(trainw)=="empl")],type='prob')[,1]
-roc06 <- roc(testw$empl,pred06)
+pred06 <- predict(model06,test[,-which(colnames(train)=="empl")],type='prob')[,1]
+roc06 <- roc(test$empl,pred06)
 v06 <- varImp(model06)
 
 saveRDS(model06, "models/model06.rds")
 model06 <- readRDS("models/model06.rds")
 
 #bayesian generalized linear model
-model07 <- train(empl~., data = trainw[,-c(which(colnames(trainw)=='psraid'),
-                                           which(colnames(trainw)=='state'))],
+model07 <- train(empl~., data = train[,-c(which(colnames(train)=='psraid'),
+                                           which(colnames(train)=='state'))],
                  method = 'bayesglm',
                  trControl = myControl,
                  na.action = na.exclude,
                  preProc = c("center","scale"))
-pred07 <- predict(model07,testw[,-which(colnames(trainw)=="empl")],type='prob')[,1]
-roc07 <- roc(testw$empl,pred07)
+pred07 <- predict(model07,test[,-which(colnames(train)=="empl")],type='prob')[,1]
+roc07 <- roc(test$empl,pred07)
 v07 <- varImp(model07)
 
 saveRDS(model07, "models/model07.rds")
 model07 <- readRDS("models/model07.rds")
 
 #rf
-model08 <- train(empl~.-psraid-state, data = trainw,
+model08 <- train(empl~.-psraid-state, data = train,
                  method = 'rf',
                  trControl = myControl,
                  na.action = na.exclude)
-fixed08 <- predict(model08,testw[,-which(colnames(testw)=="empl")])
-pred08 <- predict(model08,testw[,-which(colnames(testw)=="empl")],type='prob')[,1]
-roc08 <- roc(testw$empl,pred08)
+fixed08 <- predict(model08,test[,-which(colnames(test)=="empl")])
+pred08 <- predict(model08,test[,-which(colnames(test)=="empl")],type='prob')[,1]
+roc08 <- roc(test$empl,pred08)
 v08 <- varImp(model08)
-sum(fixed08==testw$empl)/length(fixed08)
+sum(fixed08==test$empl)/length(fixed08)
 
 saveRDS(model08, "models/model08.rds")
 model08 <- readRDS("models/model08.rds")
+#this is the best model. WE USE THIS FOR VARIABLE IMPORTANCE
+
 
 ###################################################
 
@@ -208,55 +142,40 @@ qplot(variable, data=imp, geom="bar",
 model041 <- train(empl~.-psraid-month-cregion-state-
                       q1-intfreq-bbhome3-device1a-
                       game2f-stud-smjob1-snsjob2a-snsjob2b-
-                      hisp, data = trainw,
+                      hisp, data = train,
                   method = 'gbm',
                   trControl = myControl,
                   #tuneGrid = gbmGrid,
                   na.action = na.exclude,
-                  nTrain = round(0.75*dim(trainw)[1]))
-pred041 <- predict(model041,testw[,-which(colnames(trainw)=="empl")],type='prob')[,1]
-roc041 <- roc(testw$empl,pred041)
+                  nTrain = round(0.75*dim(train)[1]))
+pred041 <- predict(model041,test[,-which(colnames(train)=="empl")],type='prob')[,1]
+roc041 <- roc(test$empl,pred041)
 v041 <- varImp(model041)
 #better model than model04
 
 saveRDS(model041, "models/model041.rds")
 model041 <- readRDS("models/model041.rds")
 
-plot(model041$finalModel,i.var=60,col='blue')
-plot(model041$finalModel,i.var=2,col='blue')
-plot(model041$finalModel,i.var=3,col='blue')
-plot(model041$finalModel,i.var=4,col='blue')
-plot(model041$finalModel,i.var=5,col='blue')
-plot(model041$finalModel,i.var=6,col='blue')
-plot(model041$finalModel,i.var=7,col='blue')
-plot(model041$finalModel,i.var=8,col='blue')
-plot(model041$finalModel,i.var=9,col='blue')
-plot(model041$finalModel,i.var=10,col='blue')
-plot(model041$finalModel,i.var=11,col='blue')
-plot(model041$finalModel,i.var=20,col='blue')
-
-#age density plot
-ggplot( data = cleaned, aes(x = age)) + 
-    geom_density(adjust=0.6,alpha=0.3) + 
-    #geom_vline(xintercept = 57, colour="blue") + 
-    aes(colour=empl,fill=empl) + 
-    labs(title="Density Plot of Age",
-         x = "Age",
-         y = "Density",
-         colour = "Employment") + 
-    theme(legend.position="right",
-          plot.title = element_text(hjust = 0.5,
-                                    size = 14,
-                                    face = 'bold')) + 
-    guides(fill="none")
+#plot(model041$finalModel,i.var=60,col='blue')
+#plot(model041$finalModel,i.var=2,col='blue')
+#plot(model041$finalModel,i.var=3,col='blue')
+#plot(model041$finalModel,i.var=4,col='blue')
+#plot(model041$finalModel,i.var=5,col='blue')
+#plot(model041$finalModel,i.var=6,col='blue')
+#plot(model041$finalModel,i.var=7,col='blue')
+#plot(model041$finalModel,i.var=8,col='blue')
+#plot(model041$finalModel,i.var=9,col='blue')
+#plot(model041$finalModel,i.var=10,col='blue')
+#plot(model041$finalModel,i.var=11,col='blue')
+#plot(model041$finalModel,i.var=20,col='blue')
 
 #disability plot
-disa <- cleaned$disa
-disa[disa==1] <- "Disabled"
-disa[disa==2] <- "Not Disabled"
-disa[disa==9] <- "Refused"
-emp <- cleaned$empl
-disdatm <- propggplot(emp,disa)
+disa <- as.vector(empw$disa)
+disa[disa=="1"] <- "Disabled"
+disa[disa=="2"] <- "Not Disabled"
+disa[disa=="9"] <- "Refused"
+empl <- empw$empl
+disdatm <- propggplot(empl,disa)
 
 ggplot(data = disdatm) +
     geom_mosaic(aes(weight = value, x = product(rowvar, colvar), 
@@ -269,8 +188,33 @@ ggplot(data = disdatm) +
                                   face = 'bold',
                                   size = 14))
 
-#removed refused because there were too few
+#0.129553 disabled
+#0.2859425 employed|disabled
+#0.7140575 unemployed|disabled
 
+#0.8677566 able
+#0.8297162 employed|able
+#0.1702838 unemployed|able
+
+#0.7584851 employed
+#0.2415149 unemployed
+
+
+#age
+#age density plot
+ggplot( data = empw, aes(x = age)) + 
+    geom_density(adjust=0.6,alpha=0.3) + 
+    #geom_vline(xintercept = 57, colour="blue") + 
+    aes(colour=empl,fill=empl) + 
+    labs(title="Density Plot of Age",
+         x = "Age",
+         y = "Density",
+         colour = "Employment") + 
+    theme(legend.position="right",
+          plot.title = element_text(hjust = 0.5,
+                                    size = 14,
+                                    face = 'bold')) + 
+    guides(fill="none")
 #sex
 sex <- cleaned$sex
 emp <- cleaned$empl

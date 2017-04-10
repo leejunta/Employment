@@ -394,22 +394,22 @@ pew$empl <- empl
 preProcData <- preProcess(pew, method = 'knnImpute')
 pew_imp <- predict(preProcData, pew)
 pew$age <- pew_imp$age*sd(pew$age,na.rm = T)+mean(pew$age,na.rm = T)
-pew$weight <- NULL
+#pew$weight <- NULL
 #missmap(pew)
-write.csv(pew,"data/cleaned.csv",row.names = F)
+cleaned <- pew
+cleaned$weigh <- NULL
+write.csv(cleaned,"data/cleaned.csv",row.names = F)
 
 
 
 ################################
 #Change the data to take sample weights into account
 
-
-
-#cleaned <- read.csv("data/cleaned.csv")
-#weighted <- weightedDF(cleaned,cleaned$weight)
+weighted <- pew
+weighted <- weightedDF(weighted,weighted$weight)
 #weighted$weight <- NULL
 
-#write.csv(weighted,"data/weighted.csv",row.names=F)
+write.csv(weighted,"data/weighted.csv",row.names=F)
 
 ######################################
 
