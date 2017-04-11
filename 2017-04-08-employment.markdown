@@ -140,6 +140,11 @@ level, demographic information still predicts employment status more robustly.
 Given the abundance of information in the survey about different topics,
 further research can reveal relationships between features not discussed here.  
 
+## Code for Cleaning and Analysis  
+
+Please feel free to follow the code for this analysis!  
+<https://github.com/leejunta/Employment>
+
 ## References
 
 ^1^ Bureau of Labor Statistics (Apr 2017). *Labor Force Statistics from the Current Population Survey*. Retrieved from:  
