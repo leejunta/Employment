@@ -151,25 +151,25 @@ Please feel free to follow the code for this analysis!
 ## References
 
 <sup>1</sup> Bureau of Labor Statistics (Apr 2017). *Labor Force Statistics from the Current Population Survey*. Retrieved from:  
-https://data.bls.gov/timeseries/LNS14000000  
+<https://data.bls.gov/timeseries/LNS14000000>  
 
 <sup>2</sup> Bureau of Labor Statistics (Apr 2011). *Employment loss and the 2007–09
 recession: an overview*. Retrieved from:  
-https://www.bls.gov/mlr/2011/04/art1full.pdf  
+<https://www.bls.gov/mlr/2011/04/art1full.pdf>  
 
 <sup>3</sup> ADA National Network. *What is the Americans with Disabilities Act (ADA)?*.
 Retrieved from:  
-https://adata.org/learn-about-ada  
+<https://adata.org/learn-about-ada>  
 
 <sup>4</sup> United Census Bureau (Jul 2012). *Nearly 1 in 5 People Have a Disability in the U.S., Census Bureau Reports*. Retrieved from:  
-https://www.census.gov/newsroom/releases/archives/miscellaneous/cb12-134.html  
+<https://www.census.gov/newsroom/releases/archives/miscellaneous/cb12-134.html>  
 
 <sup>5</sup> OECD (Apr 2016). *PF2.5. Trends in parental leave policies since 1970*.
 Retrieved from:  
-http://www.oecd.org/els/family/PF2_5_Trends_in_leave_entitlements_around_childbirth.pdf  
+<http://www.oecd.org/els/family/PF2_5_Trends_in_leave_entitlements_around_childbirth.pdf>  
 
 <sup>6</sup> Centers for Disease Control and Prevention (Jan 2016). *Mean Age of Mothers is on the Rise: United States, 2000–2014*. Retrieved from:  
-https://www.cdc.gov/nchs/products/databriefs/db232.htm
+<https://www.cdc.gov/nchs/products/databriefs/db232.htm>  
 
 [fig:varimp]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/varimp.png
 [fig:disa]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/disability.png
