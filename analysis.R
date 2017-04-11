@@ -300,11 +300,11 @@ ggplot(sexdatm,aes(x = colvar, y = value,fill = rowvar)) +
 
 #sex & age
 j <- 6
-ggplot( data = empw, aes(x = age)) + 
+ggplot( data = empw[empw$empl=="Unemployed",], aes(x = age)) + 
     geom_area(aes(y=..count..,fill=sex,alpha = 1),stat = "bin") + 
     aes(colour=sex) + 
-    facet_wrap(~empl, ncol=4) + 
-    labs(title="Age Distribution by Employment and Sex",
+    #facet_wrap(~empl, ncol=4) + 
+    labs(title="Frequency of Unemployed by Age and Sex",
          x = "Age",
          y = "Frequency") + 
     theme(legend.position="bottom",
@@ -313,54 +313,36 @@ ggplot( data = empw, aes(x = age)) +
                                     face = 'bold')) +
     guides(colour="none",alpha="none") + 
     scale_fill_brewer(direction = -1, type='qual',palette=j) + 
-    scale_color_brewer(direction = -1,type='qual',palette=j) 
+    scale_color_brewer(direction = -1,type='qual',palette=j) +
+    annotate("rect", xmin = 26.3, xmax = 33, ymin = 0, ymax = Inf,
+             alpha = .3)
 
 #possible conclusions - 
 #younger women have babies so they leave the workforce
 #younger women are trying to enter more male-dominated jobs
 
 #explore babies to leave the workforce (female)
-fembabies <- empw[empw$sex == "Female",]
-fembabies$par <- as.vector(fembabies$par)
-fembabies$par[fembabies$par==1] <- "Parent"
-fembabies$par[fembabies$par==2] <- "Not Parent"
-fembabies$par[fembabies$par==9] <- "Don't Know"
+babies <- empw[empw$empl=="Unemployed",]
+babies$par <- as.vector(babies$par)
+babies$par[babies$par==1] <- "Parent"
+babies$par[babies$par==2] <- "Not Parent"
+babies$par[babies$par==9] <- "Don't Know"
 
-ggplot( data = fembabies, aes(x = age)) + 
-    geom_histogram(binwidth=3.2, aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..])) + 
-    aes(colour=par,fill=par,alpha=0.3) + 
-    facet_wrap(~empl, ncol=2) + 
-    labs(title="Women in the Workforce by Parental Status",
-         y="Percentage",
-         x="Age",
-         fill="Parental Status") + 
-    theme(legend.position="top",
-          plot.title=element_text(hjust = 0.5,
-                                  face='bold',
-                                  size =14)) +
-    guides(alpha=F,colour=F) +
-    scale_y_continuous(labels = percent_format())
-
-#explore babies to leave the workforce (male)
-malbabies <- empw[empw$sex == "Male",]
-malbabies$par[malbabies$par==1] <- "Parent"
-malbabies$par[malbabies$par==2] <- "Not Parent"
-malbabies$par[malbabies$par==9] <- "Don't Know"
-
-ggplot( data = malbabies, aes(x = age)) + 
-    geom_histogram(binwidth=3.2, aes(y=(..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..])) + 
-    aes(colour=par,fill=par,alpha=0.3) + 
-    facet_wrap(~empl, ncol=2) + 
-    labs(title="Men in the Workforce by Parental Status",
-         y="Percentage",
-         x="Age",
-         fill="Parental Status") + 
-    theme(legend.position="top",
-          plot.title=element_text(hjust = 0.5,
-                                  face='bold',
-                                  size =14)) +
-    guides(alpha=F,colour=F) +
-    scale_y_continuous(labels = percent_format())
+ggplot( data = babies, aes(x = age)) + 
+    geom_area(aes(y=..count..,fill=par,alpha = 1),stat = "bin") + 
+    aes(colour=par) + 
+    facet_wrap(~sex, ncol=4) + 
+    labs(title="Unemployment by Age, Sex, and Parental Status",
+         x = "Age",
+         y = "Frequency",
+         fill = "Parental Status") + 
+    theme(legend.position="bottom",
+          plot.title = element_text(hjust = 0.5,
+                                    size = 14,
+                                    face = 'bold')) +
+    guides(colour="none",alpha="none") + 
+    scale_fill_brewer(direction = -1, type='qual',palette=j) + 
+    scale_color_brewer(direction = -1,type='qual',palette=j)
 
 ######################################
 

@@ -50,7 +50,9 @@ data-cleaning process mainly involved merging conditional questions and removing
 variables correlated or associated with employment status. We reduced the 
 variable for employment status to `Employed` or `Unemployed` by removing students
 and those have have already retired. Since the frequency of underemployment/part-time
-employment was low, we merged those reponses with the `Employed` factor. The final 
+employment was low, we merged those reponses with the `Employed` factor. In the 
+analysis of this dataset, *we use the term `Unemployed` loosely to imply lack of
+employment instead of the technical definition of unemployment*. The final 
 dataset consisted of 1395 observations and 45 features.  
 
 ## Building Random Forests  
@@ -65,8 +67,8 @@ were `Disability`, `Age`, `Sex`, `Education`, `Internet Usage for Job Search`,
 
 ![Variable Importance][fig:varimp]  
 The results are inconsistent with our hypothesis that attitudes and activity of 
-technology are strong predictors of employment. We analyze more closely how the 
-variables of highest importance are related to employment.  
+technology are strong predictors of employment. We analyze more closely how some
+of the variables of highest importance are related to employment.  
 
 ### Accomodations for persons with disability remains insufficient in the US
 
@@ -76,7 +78,8 @@ In contrast, only 17% of people without any disabilities were unemployed. Only
 13% of people in the survey had disabilities, but they comprised of almost 40% of the
 unemployed group.  
 ![Disability Mosaic][fig:disa]  
-Title I of the Americans with Disabilities Act Amendments Act (ADAAA) requires 
+Title I of the Americans with Disabilities Act Amendments Act (ADAAA), the
+updated version of the Americans with Disabilities Act, requires 
 employers to provide reasonable accomodations to qualified applicants or
 employees, with the exception of companies with fewer than 15 employees (ADA). The data 
 suggests that either accomodations are insufficient, employers are not complying
@@ -93,8 +96,33 @@ accomodations for people with disability are necessary. The fact that disability
 status is the strongest indicator of employment status in our model (or any
 resonable model, for that matter) is highly problematic.
 
-### Age 
+### Gender roles pertaining to parenting continue to drive women out of the workforce
+
+The current maternity leave policy in the US, the Family and Medical Leave Act
+(FMLA), provides most US employees with upto 12 weeks of unpaid maternal leave.
+In contrast, in 2015, Slovak Republic offer up to 160 week of paid maternity or
+paternity leave (OECD). Among the 35 Organisation for Economic Co-operation and 
+Development (OECD) countries, the US is the only country with no paid maternity
+leave. Exploring employment status by sex and age, we find that the only
+deviation of pattern for all factors is the relative increase in unemployment
+for women between ages 26 to 30 while unemployment for men in the same age group
+decreased.  
+![Age-Sex Distribution][fig:agesex]  
+In 2014, the average age of mothers at first birth was 26.3 years (Centers for
+Disease Control and Prevention), where women's unemployment rate increases in
+our data. This could suggest that women's drop in employment may be attributed
+to the lack of support for maternity leave. Exploring how unemployment differs
+between men and women who are or are not parents, the men and women who are not
+parents share similar unemployment distributions.  
+![Parental Unemployment][fig:paremp]
+In contrast, mothers have an unemployment distribution more concentrated from ages 25 
+to 50, a common age group to care for children. While we lack sufficient
+information to make stronger claims about child care needs and employment, we
+suspect that providing paid maternity and/or paternity leave would increase
+mothers' employment rate.
 
 [fig:varimp]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/varimp.png
 [fig:disa]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/disability.png
 [fig:disinc]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/income.png
+[fig:agesex]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/ageempsex.png
+[fig:paremp]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/parentalemp.png
