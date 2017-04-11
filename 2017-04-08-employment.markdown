@@ -29,6 +29,12 @@ I hope you enjoy!
 
 # Is Technology Essential for Employment? Predicting Employment through Internet, Social Media, and Gaming Activity  
 
+*Analysis of survey responses to questions regarding technology and employment
+suggest three notable ideas: disabilities continue to hinder employment despite
+regulations for accomodations, given US policies on maternal leave mothers are
+more likely to leave the workforce after their first child-birth, and people who
+use the internet for job searches are more likely to have higher wages.*
+
 The 2008 Financial Crisis was the worst financial crisis since The Great
 Depression, decreasing employment by 8.8 million in just 14 months<sup>1</sup>. 
 The US has since dropped its overall unemployment rate to 4.5% in March,
@@ -87,8 +93,8 @@ employers to provide reasonable accomodations to qualified applicants or
 employees, with the exception of companies with fewer than 15 employees<sup>3</sup>. The data 
 suggests that either accomodations are insufficient, employers are not complying
 with this law, or people with disabilities are unqualified for most available
-jobs. I am willing to bet that Stephen Hawking with disagree with the last
-consideration. Furthermore, based on the income distribution (this feature was
+jobs. We find it highly unlikely that people with disabilities are unemployable. 
+Furthermore, based on the income distribution (this feature was
 not included in the Random Forest), people with disabilities consistently
 represent a larger proportion of the lower income class and smaller proportion of the
 higher income class.  
@@ -134,7 +140,7 @@ skewed to the right, the distribution for those who do is skewed to the left.
 ![Job Search Income][fig:jobinc]
 We suspect that the ability to use the internet for job searches is closely 
 associated with having more technical skills. Since jobs with more technical
-skills tend to have higher wages, this result is not especially astonishing.
+skills tend to have higher wages, this result is not surprising.
 
 ## Demographics are still better predictors of employment than technology
 

@@ -190,11 +190,12 @@ model041 <- readRDS("models/model041.rds")
 
 #disability plot
 disa <- as.vector(empw$disa)
-disa[disa=="1"] <- "Disabled"
-disa[disa=="2"] <- "Not Disabled"
+disa[disa=="1"] <- "With Disability"
+disa[disa=="2"] <- "Without Disability"
 disa[disa=="9"] <- "Refused"
 empl <- empw$empl
 disdatm <- propggplot(empl,disa)
+disdatm$colvar <- factor(disdatm$colvar,levels=c("With Disability","Without Disability","Refused"))
 
 ggplot(data = disdatm) +
     geom_mosaic(aes(weight = value, x = product(rowvar, colvar), 
@@ -235,10 +236,10 @@ inc$Income[inc$Income==8] <- "$100,000-$149,999"
 inc$Income[inc$Income==9] <- ">$150,000"
 inc$Income[inc$Income==10] <- "Refused"
 inc$Disability <- as.vector(inc$Disability)
-inc$Disability[(inc$Disability==1)] <- "Disabled"
-inc$Disability[(inc$Disability==2)] <- "Not Disabled"
+inc$Disability[(inc$Disability==1)] <- "With Disability"
+inc$Disability[(inc$Disability==2)] <- "Without Disability"
 inc$Disability[(inc$Disability==9)] <- "Refused"
-inc$Disability <- factor(inc$Disability, levels=c("Disabled","Not Disabled","Refused"))
+inc$Disability <- factor(inc$Disability, levels=c("With Disability","Without Disability","Refused"))
 inc$Income <- factor(inc$Income,levels=c("<$10,000",
                                  "$10,000-$19,999",
                                  "$20,000-$29,999",
@@ -260,7 +261,9 @@ incdatm$colvar <- factor(incdatm$colvar,levels=c("<$10,000",
                                              "$75,000-$99,999",
                                              "$100,000-$149,999",
                                              ">$150,000","Refused"))
-
+incdatm$rowvar <- factor(incdatm$rowvar,levels=c("With Disability",
+                                                 "Without Disability",
+                                                 "Refused"))
 ggplot(data = incdatm[order(incdatm$rowvar),]) +
     geom_mosaic(aes(weight = value, x = product(rowvar, colvar), 
                     fill=rowvar), na.rm=TRUE) +
