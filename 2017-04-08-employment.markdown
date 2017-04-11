@@ -1,5 +1,5 @@
 ---
-title: "Is Technology Essential for Employment?"
+title: "Is Technology Becoming Essential for Employment?"
 layout: post
 date: 2017-04-09
 image: /assets/images/markdown.jpg
@@ -27,13 +27,15 @@ analysis are similar, the analysis more rigorous in my opinion. This is my first
 post in my effort to work on independent data analysis projects more often, so
 I hope you enjoy!  
 
-# Is Technology Essential for Employment? Predicting Employment through Internet, Social Media, and Gaming Activity  
+# Is Technology Becoming Essential for Employment? Technology vs. Demographics in Employment  
 
 *Analysis of survey responses to questions regarding technology and employment
 suggest three notable ideas: disabilities continue to hinder employment despite
 regulations for accomodations, given US policies on maternal leave mothers are
 more likely to leave the workforce after their first child-birth, and people who
-use the internet for job searches are more likely to have higher wages.*
+use the internet for job searches are more likely to have higher wages.
+Demographic information  continues to affect employment status more despite the increasing
+usage of technology for employment.*
 
 The 2008 Financial Crisis was the worst financial crisis since The Great
 Depression, decreasing employment by 8.8 million in just 14 months<sup>1</sup>. 
