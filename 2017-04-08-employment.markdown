@@ -30,9 +30,9 @@ I hope you enjoy!
 # Is Technology Essential for Employment? Predicting Employment through Internet, Social Media, and Gaming Activity  
 
 The 2008 Financial Crisis was the worst financial crisis since The Great
-Depression, decreasing employment by 8.8 million in just 14 months</sup>1</sup>. 
+Depression, decreasing employment by 8.8 million in just 14 months<sup>1</sup>. 
 The US has since dropped its overall unemployment rate to 4.5% in March,
-2017</sup>2</sup>. Knowing what factors 
+2017<sup>2</sup>. Knowing what factors 
 decrease unemployment rate helps the government enact social policies more
 effectively. Given the increased use of the internet for job postings and
 applications, the resurgence of the employment rate can be partially
@@ -82,7 +82,7 @@ unemployed group.
 Title I of the Americans with Disabilities Act Amendments Act (ADAAA), the
 updated version of the Americans with Disabilities Act, requires 
 employers to provide reasonable accomodations to qualified applicants or
-employees, with the exception of companies with fewer than 15 employees</sup>3</sup>. The data 
+employees, with the exception of companies with fewer than 15 employees<sup>3</sup>. The data 
 suggests that either accomodations are insufficient, employers are not complying
 with this law, or people with disabilities are unqualified for most available
 jobs. I am willing to bet that Stephen Hawking with disagree with the last
@@ -100,16 +100,16 @@ resonable model, for that matter) is highly problematic.
 ### Gender roles pertaining to parenting may drive women out of the workforce
 
 The current maternity leave policy in the US, the Family and Medical Leave Act, 
-(FMLA) provides most US employees with upto 12 weeks of unpaid maternal leave</sup>4</sup>.
+(FMLA) provides most US employees with upto 12 weeks of unpaid maternal leave<sup>4</sup>.
 In contrast, in 2015, Slovak Republic offer up to 160 week of paid maternity or
-paternity leave</sup>5</sup>. Among the 35 Organisation for Economic Co-operation and 
+paternity leave<sup>5</sup>. Among the 35 Organisation for Economic Co-operation and 
 Development (OECD) countries, the US is the only country with no paid maternity
 leave. Exploring employment status by sex and age, we find that the only
 deviation of pattern for all factors is the relative increase in unemployment
 for women between ages 26 to 30 while unemployment for men in the same age group
 decreased.  
 ![Age-Sex Distribution][fig:agesex]  
-In 2014, the average age of mothers at first birth was 26.3 years</sup>6</sup>, where 
+In 2014, the average age of mothers at first birth was 26.3 years<sup>6</sup>, where 
 women's unemployment rate increases in
 our data. This could suggest that women's drop in employment may be attributed
 to the lack of support for maternity leave. Exploring how unemployment differs
