@@ -130,7 +130,7 @@ In additional to technological advances contributing to the US's record-low
 unemployment rates since the 2008 Financial Crisis, those who use technology and
 the internet for assistance for job searches tend to have higher salaries. While
 the income distribution for those who do not use technology for job searches is
-skewed to the right, the distribution for those who is skewed to the left.  
+skewed to the right, the distribution for those who do is skewed to the left.  
 ![Job Search Income][fig:jobinc]
 We suspect that the ability to use the internet for job searches is closely 
 associated with having more technical skills. Since jobs with more technical
