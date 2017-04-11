@@ -125,6 +125,24 @@ imp <- varImpDF(model08$finalModel,9)
 imp$variable <- labels
 imp$variable <- factor(imp$variable,levels = rev(labels))
 
+ggplot(imp,aes(variable,importance)) + 
+    geom_point(col='tomato2',size=3) + 
+    geom_segment(aes(x=variable,xend=variable,
+                     y=min(importance),
+                     yend=max(importance)),
+                 linetype = "dashed",
+                 size =0.1) +
+    coord_flip() + 
+    theme(panel.grid.major.y = element_line(size=0.1),
+          panel.grid.minor = element_blank()) + 
+    labs(title = "Variable Importance Plot",
+         y = "Mean Gini Decrease",
+         x = "") + 
+    theme(plot.title = element_text(hjust=0.5,
+                                    face='bold',
+                                    size=14))
+
+
 qplot(variable, data=imp, geom="bar", 
       weight=importance, fill = importance,
       xlab = "", ylab="Mean Gini Decrease (GDM)") +
@@ -402,9 +420,18 @@ saldatm$colvar <- factor(saldatm$colvar,levels=c("<$10,000",
                                                  ">$150,000","Refused"))
 saldatm$rowvar <- factor(saldatm$rowvar,levels=c("Yes","No"))
 
-ggplot(saldatm,aes(x=colvar,value)) +
-    geom_bar(aes(fill=rowvar), position = "dodge", stat="identity")
-#examine smart1 next
+ggplot(saldatm,aes(x=rowvar,value)) +
+    geom_bar(aes(fill=colvar), position = "dodge", stat="identity") +
+    labs(title = "Income Distribution by Internet Use for Job Search",
+         x = "Internet Use for Job Search?",
+         y = "Frequency",
+         fill = "Income") +
+    theme(plot.title = element_text(hjust = 0.5,
+                                    face = 'bold',
+                                    size = 14))
+table(salary)
+
+u#examine smart1 next
 
 
 smart1 <- as.vector(empw$smart1)
@@ -431,7 +458,8 @@ ggplot(smartdatm) +
                                   size = 12))
 
 #age & smartphone
-smartdf <- cleaned[cleaned$smart1 != 9,]
+smartdf <- empw[empw$smart1 != 9,]
+smartdf$smart1 <- as.vector(smartdf$smart1)
 smartdf$smart1[smartdf$smart1 == 1] <- "Smartphone"
 smartdf$smart1[smartdf$smart1 == 2] <- "No Smartphone"
 #smartdf$smart1[smartdf$smart1 == 9] <- "Refused"
