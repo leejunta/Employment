@@ -14,6 +14,7 @@ require(dplyr)
 require(reshape)
 require(ggmosaic)
 require(reshape)
+require(scales)
 
 ##############################
 
@@ -260,22 +261,25 @@ ggplot(data = incdatm[order(incdatm$rowvar),]) +
 
 #age
 #age density plot
+i <- 6
 ggplot( data = empw, aes(x = age)) + 
-    geom_density(adjust=0.6,alpha=0.3) + 
-    #geom_vline(xintercept = 57, colour="blue") + 
     aes(colour=empl,fill=empl) + 
-    labs(title="Density Plot of Age",
+    geom_area(aes(y = ..count.., fill = empl, alpha =0.4), stat = "bin") +
+    labs(title="Frequency Plot of Age",
          x = "Age",
-         y = "Density",
-         colour = "Employment") + 
+         y = "Frequency",
+         fill = "Employment") + 
     theme(legend.position="right",
           plot.title = element_text(hjust = 0.5,
                                     size = 14,
                                     face = 'bold')) + 
-    guides(fill="none")
+    guides(colour="none",alpha="none") + 
+    scale_fill_brewer(direction = -1, type='qual',palette=i) + 
+    scale_color_brewer(direction = -1,type='qual',palette=i) 
+    
 #sex
-sex <- cleaned$sex
-emp <- cleaned$empl
+sex <- empw$sex
+emp <- empw$empl
 sexdatm <- propggplot(emp,sex)
 #Add an id variable for the filled regions
 ggplot(sexdatm,aes(x = colvar, y = value,fill = rowvar)) + 
@@ -287,30 +291,37 @@ ggplot(sexdatm,aes(x = colvar, y = value,fill = rowvar)) +
          fill = "Employment") + 
     theme(plot.title=element_text(hjust = 0.5,
                                   face = 'bold',
-                                  size = 14))
+                                  size = 14)) + 
+    coord_flip() + 
+    scale_fill_brewer(direction = -1,type = 'qual',palette =4) + 
+    scale_color_brewer(direction = -1,type = 'qual',palette =4) 
 
 #females have higher unemployment
 
 #sex & age
-ggplot( data = cleaned, aes(x = age)) + 
-    geom_density(adjust=0.4) + 
-    aes(colour=sex,fill=sex,alpha=0.3) + 
+j <- 6
+ggplot( data = empw, aes(x = age)) + 
+    geom_area(aes(y=..count..,fill=sex,alpha = 1),stat = "bin") + 
+    aes(colour=sex) + 
     facet_wrap(~empl, ncol=4) + 
-    labs(title="Employment Status by Age and Sex",
+    labs(title="Age Distribution by Employment and Sex",
          x = "Age",
-         y = "Density",
-         colour = "Sex") + 
-    theme(legend.position="top",
+         y = "Frequency") + 
+    theme(legend.position="bottom",
           plot.title = element_text(hjust = 0.5,
                                     size = 14,
                                     face = 'bold')) +
-    guides(alpha=F, fill = F)
+    guides(colour="none",alpha="none") + 
+    scale_fill_brewer(direction = -1, type='qual',palette=j) + 
+    scale_color_brewer(direction = -1,type='qual',palette=j) 
+
 #possible conclusions - 
 #younger women have babies so they leave the workforce
 #younger women are trying to enter more male-dominated jobs
 
 #explore babies to leave the workforce (female)
-fembabies <- cleaned[cleaned$sex == "Female",]
+fembabies <- empw[empw$sex == "Female",]
+fembabies$par <- as.vector(fembabies$par)
 fembabies$par[fembabies$par==1] <- "Parent"
 fembabies$par[fembabies$par==2] <- "Not Parent"
 fembabies$par[fembabies$par==9] <- "Don't Know"
@@ -331,7 +342,7 @@ ggplot( data = fembabies, aes(x = age)) +
     scale_y_continuous(labels = percent_format())
 
 #explore babies to leave the workforce (male)
-malbabies <- cleaned[cleaned$sex == "Male",]
+malbabies <- empw[empw$sex == "Male",]
 malbabies$par[malbabies$par==1] <- "Parent"
 malbabies$par[malbabies$par==2] <- "Not Parent"
 malbabies$par[malbabies$par==9] <- "Don't Know"

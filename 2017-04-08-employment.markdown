@@ -68,7 +68,7 @@ The results are inconsistent with our hypothesis that attitudes and activity of
 technology are strong predictors of employment. We analyze more closely how the 
 variables of highest importance are related to employment.  
 
-### Accessibility for persons with disability remains insufficient in the US
+### Accomodations for persons with disability remains insufficient in the US
 
 Approximately a quarter (24.2%) of people in the weighted data identified as
 being unemployed. However, 71% of people with disabilities were unemployed.
@@ -92,6 +92,8 @@ disability. Surely, better accomodations and/or stronger regulations to provide
 accomodations for people with disability are necessary. The fact that disability
 status is the strongest indicator of employment status in our model (or any
 resonable model, for that matter) is highly problematic.
+
+### Age 
 
 [fig:varimp]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/varimp.png
 [fig:disa]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/disability.png
