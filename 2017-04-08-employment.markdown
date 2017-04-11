@@ -70,7 +70,7 @@ The results are inconsistent with our hypothesis that attitudes and activity of
 technology are strong predictors of employment. We analyze more closely how some
 of the variables of highest importance are related to employment.  
 
-### Accomodations for persons with disability remains insufficient in the US
+### Accomodations for persons with disability remain insufficient in the US
 
 Approximately a quarter (24.2%) of people in the weighted data identified as
 being unemployed. However, 71% of people with disabilities were unemployed.
@@ -96,7 +96,7 @@ accomodations for people with disability are necessary. The fact that disability
 status is the strongest indicator of employment status in our model (or any
 resonable model, for that matter) is highly problematic.
 
-### Gender roles pertaining to parenting continue to drive women out of the workforce
+### Gender roles pertaining to parenting may drive women out of the workforce
 
 The current maternity leave policy in the US, the Family and Medical Leave Act
 (FMLA), provides most US employees with upto 12 weeks of unpaid maternal leave.
@@ -120,6 +120,8 @@ to 50, a common age group to care for children. While we lack sufficient
 information to make stronger claims about child care needs and employment, we
 suspect that providing paid maternity and/or paternity leave would increase
 mothers' employment rate.
+
+### Technology used for employment purposes affect higher income jobs more than lower income
 
 [fig:varimp]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/varimp.png
 [fig:disa]: https://raw.githubusercontent.com/leejunta/Employment/master/figures/disability.png

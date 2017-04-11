@@ -235,6 +235,7 @@ pew$auto1c <- NULL
 pew$auto1d <- NULL
 pew$auto1e <- NULL
 pew$auto2 <- NULL
+salary <- pew$inc
 pew$inc <- NULL
 
 #change stud to include everyone
@@ -409,13 +410,19 @@ write.csv(cleaned,"data/cleaned.csv",row.names = F)
 
 weighted <- pew
 weighted <- weightedDF(weighted,weighted$weight)
-#weighted$weight <- NULL
+weighted$weight <- NULL
 
 write.csv(weighted,"data/weighted.csv",row.names=F)
 
 ######################################
 
+#weighted with income
 
+income <- data.frame(cleaned,salary)
+income$salary[(income$salary==99) | (income$salary==98)] <- 10
+income <- weightedDF(income,income$weight)
+income$weight <- NULL
 
+write.csv(income,"data/income.csv",row.names=F)
 
 

@@ -202,10 +202,10 @@ ggplot(data = disdatm) +
 #0.2415149 unemployed
 
 #for further analysis, we add income to the data
-dataset00 <- read.csv("data/unchanged.csv")
-inc <- data.frame("Disability" = cleaned$disa,
-                  "Employment" = cleaned$empl,
-                  "Income" = dataset00$inc)
+inc <- read.csv("data/income.csv")
+inc <- data.frame("Disability" = inc$disa,
+                  "Employment" = inc$empl,
+                  "Income" = inc$salary)
 inc$Income[inc$Income==1] <- "<$10,000"
 inc$Income[inc$Income==2] <- "$10,000-$19,999"
 inc$Income[inc$Income==3] <- "$20,000-$29,999"
@@ -215,7 +215,7 @@ inc$Income[inc$Income==6] <- "$50,000-$64,999"
 inc$Income[inc$Income==7] <- "$75,000-$99,999"
 inc$Income[inc$Income==8] <- "$100,000-$149,999"
 inc$Income[inc$Income==9] <- ">$150,000"
-inc$Income[(inc$Income==99) | (inc$Income==98)] <- "Refused"
+inc$Income[inc$Income==10] <- "Refused"
 inc$Disability <- as.vector(inc$Disability)
 inc$Disability[(inc$Disability==1)] <- "Disabled"
 inc$Disability[(inc$Disability==2)] <- "Not Disabled"
@@ -229,7 +229,8 @@ inc$Income <- factor(inc$Income,levels=c("<$10,000",
                                  "$50,000-$64,999",
                                  "$75,000-$99,999",
                                  "$100,000-$149,999",
-                                 ">$150,000","Refused"))
+                                 ">$150,000",
+                                 "Refused"))
 inc$Employment <- factor(inc$Employment,levels=c("Employed","Unemployed"))
 incdatm <- propggplot(inc$Disability,inc$Income)
 incdatm$colvar <- factor(incdatm$colvar,levels=c("<$10,000",
@@ -346,18 +347,81 @@ ggplot( data = babies, aes(x = age)) +
 
 ######################################
 
+#web1-a: internet for jobs
+web1 <- as.vector(empw$web1a)
+web1[web1==1] <- "Yes"
+web1[web1==2] <- "No"
+empl <- empw$empl
+web1datm <- propggplot(empl,web1)
+
+ggplot(web1datm) + 
+    geom_mosaic(aes(weight = value, x = product(rowvar,colvar),
+                    fill = rowvar)) + 
+    #scale_y_continuous(labels = percent_format()) + 
+    #scale_x_discrete(limits = c("Smartphone","No Smartphone","Refused")) + 
+    labs(title = "Employment Status by Internet Use for Job Searches",
+         x = "",
+         y = "Percentage",
+         fill = "Employment") + 
+    theme(plot.title=element_text(hjust = 0.5,
+                                  face = 'bold',
+                                  size = 12))
+
+salary <- read.csv("data/income.csv")
+salary <- data.frame("Income" = salary$salary,
+                     "InternetJob" = web1)
+salary$Income[salary$Income==1] <- "<$10,000"
+salary$Income[salary$Income==2] <- "$10,000-$19,999"
+salary$Income[salary$Income==3] <- "$20,000-$29,999"
+salary$Income[salary$Income==4] <- "$30,000-$39,999"
+salary$Income[salary$Income==5] <- "$40,000-$49,999"
+salary$Income[salary$Income==6] <- "$50,000-$64,999"
+salary$Income[salary$Income==7] <- "$75,000-$99,999"
+salary$Income[salary$Income==8] <- "$100,000-$149,999"
+salary$Income[salary$Income==9] <- ">$150,000"
+salary$Income[salary$Income==10] <- "Refused"
+salary$Income <- factor(salary$Income,levels=c("<$10,000",
+                                               "$10,000-$19,999",
+                                               "$20,000-$29,999",
+                                               "$30,000-$39,999",
+                                               "$40,000-$49,999",
+                                               "$50,000-$64,999",
+                                               "$75,000-$99,999",
+                                               "$100,000-$149,999",
+                                               ">$150,000",
+                                               "Refused"))
+saldatm <- propggplot(salary$InternetJob,salary$Income)
+saldatm$colvar <- factor(saldatm$colvar,levels=c("<$10,000",
+                                                 "$10,000-$19,999",
+                                                 "$20,000-$29,999",
+                                                 "$30,000-$39,999",
+                                                 "$40,000-$49,999",
+                                                 "$50,000-$64,999",
+                                                 "$75,000-$99,999",
+                                                 "$100,000-$149,999",
+                                                 ">$150,000","Refused"))
+saldatm$rowvar <- factor(saldatm$rowvar,levels=c("Yes","No"))
+
+ggplot(saldatm,aes(x=colvar,value)) +
+    geom_bar(aes(fill=rowvar), position = "dodge", stat="identity")
 #examine smart1 next
-smart1 <- cleaned$smart1
+
+
+smart1 <- as.vector(empw$smart1)
 smart1[smart1==1] <- "Smartphone"
 smart1[smart1==2] <- "No Smartphone"
 smart1[smart1==9] <- "Refused"
-emp <- cleaned$empl
-smartdatm <- propggplot(emp,smart1)
+empl <- empw$empl
+smartdatm <- propggplot(empl,smart1)
+smartdatm$colvar <- factor(smartdatm$colvar,levels=c("No Smartphone",
+                                              "Smartphone",
+                                              "Refused"))
 
-ggplot(smartdatm,aes(x = colvar, y = value,fill = rowvar)) + 
-    geom_bar(position = "fill",stat = "identity") + 
-    scale_y_continuous(labels = percent_format()) + 
-    scale_x_discrete(limits = c("Smartphone","No Smartphone","Refused")) + 
+ggplot(smartdatm) + 
+    geom_mosaic(aes(weight = value, x = product(rowvar,colvar),
+                    fill = rowvar)) + 
+    #scale_y_continuous(labels = percent_format()) + 
+    #scale_x_discrete(limits = c("Smartphone","No Smartphone","Refused")) + 
     labs(title = "Employment Status by Smartphone Ownership",
          x = "",
          y = "Percentage",
