@@ -52,7 +52,8 @@ variable for employment status to `Employed` or `Unemployed` by removing student
 and those have have already retired. Since the frequency of underemployment/part-time
 employment was low, we merged those reponses with the `Employed` factor. In the 
 analysis of this dataset, *we use the term `Unemployed` loosely to imply lack of
-employment instead of the technical definition of unemployment*. The final 
+employment instead of the technical definition of unemployment* because the
+survey did not distinguish lack of a job from unemployment. The final 
 dataset consisted of 1395 observations and 45 features.  
 
 ## Building Random Forests  
