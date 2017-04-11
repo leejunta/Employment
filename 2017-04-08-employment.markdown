@@ -50,7 +50,9 @@ data-cleaning process mainly involved merging conditional questions and removing
 variables correlated or associated with employment status. We reduced the 
 variable for employment status to `Employed` or `Unemployed` by removing students
 and those have have already retired. Since the frequency of underemployment/part-time
-employment was low, we merged those reponses with the `Employed` factor. In the 
+employment was low, we merged those reponses with the `Employed` factor. We
+recognize, however, that underemployment/part-time employment can reveal more
+details that we can not otherwise uncover. In the 
 analysis of this dataset, *we use the term `Unemployed` loosely to imply lack of
 employment instead of the technical definition of unemployment* because the
 survey did not distinguish lack of a job from unemployment. The final 
