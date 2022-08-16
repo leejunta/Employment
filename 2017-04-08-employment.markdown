@@ -27,7 +27,7 @@ analysis are similar, the analysis more rigorous in my opinion. This is my first
 post in my effort to work on independent data analysis projects more often, so
 I hope you enjoy!  
 
-# Is Technology Proficiency Essential for Employment? Technology vs. Demographics in Employment  
+# Is Technological Proficiency Essential for Employment? Technology vs. Demographics in Employment  
 
 *Analysis of survey responses to questions regarding technology and employment
 suggest three notable ideas: disabilities continue to hinder employment despite
