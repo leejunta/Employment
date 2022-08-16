@@ -1,5 +1,5 @@
 ---
-title: "Is Technology Becoming Essential for Employment?"
+title: "Is Technological Proficiency Essential for Employment?"
 layout: post
 date: 2017-04-09
 image: /assets/images/markdown.jpg
@@ -27,7 +27,7 @@ analysis are similar, the analysis more rigorous in my opinion. This is my first
 post in my effort to work on independent data analysis projects more often, so
 I hope you enjoy!  
 
-# Is Technology Becoming Essential for Employment? Technology vs. Demographics in Employment  
+# Is Technology Proficiency Essential for Employment? Technology vs. Demographics in Employment  
 
 *Analysis of survey responses to questions regarding technology and employment
 suggest three notable ideas: disabilities continue to hinder employment despite
