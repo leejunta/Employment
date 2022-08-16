@@ -1,4 +1,6 @@
-# Employment
+# Is Technological Proficiency Essential for Employment? Technology vs. Demographics in Employment
+
+The summary of this analysis can be found in the [markdown file here](2017-04-08-employment.markdown).
 
 This project is an extension of a previous project that used the same data set for submission to the 2016 USCLAP Statistics Competition. The paper, however, was focused on machine learning and model selection. We wanted to redo the project by focusing on the data instead, which led to this project.  
 
@@ -22,7 +24,7 @@ Instead of using our model to explain different variables, we let the model guid
 
 ## Results  
 You can find the results on my website:  
-http://juntaeklee.com/employment/  
+<s>http://juntaeklee.com/employment/<s>
 
 ## Acknowledgments  
 Special thank you to Noah Sebek '17 and Yiran Xu '17 for working on the original project with me!
