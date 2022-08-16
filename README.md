@@ -24,7 +24,7 @@ Instead of using our model to explain different variables, we let the model guid
 
 ## Results  
 You can find the results on my website:  
-<s>http://juntaeklee.com/employment/<s>
+<s>http://juntaeklee.com/employment/</s>
 
 ## Acknowledgments  
 Special thank you to Noah Sebek '17 and Yiran Xu '17 for working on the original project with me!
